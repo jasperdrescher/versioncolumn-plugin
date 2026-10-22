@@ -51,10 +51,20 @@ public class VersionMonitor extends NodeMonitor {
         if (version == null) {
             return "N/A";
         }
+        String display = VersionShortener.remoting(version);
         if (!version.equals(masterVersion)) {
-            return Util.wrapToErrorSpan(version);
+            return Util.wrapToErrorSpan(display);
         }
-        return version;
+        return display;
+    }
+
+    /** The full version for a tooltip, with the controller's version added if they differ. */
+    @SuppressWarnings("unused") // jelly
+    public String getTooltip(String version) {
+        if (version == null) {
+            return "";
+        }
+        return version.equals(masterVersion) ? version : version + " (controller: " + masterVersion + ")";
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT", justification = "for backward compatibility")
