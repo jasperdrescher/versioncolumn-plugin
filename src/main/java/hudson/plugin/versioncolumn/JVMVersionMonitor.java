@@ -86,9 +86,9 @@ public class JVMVersionMonitor extends NodeMonitor {
                 new JVMVersionComparator(CONTROLLER_VERSION, Runtime.Version.parse(version), comparisonMode);
         String display = VersionShortener.jvm(version);
         if (jvmVersionComparator.isNotCompatible()) {
-            return Util.wrapToErrorSpan(display);
+            return Util.wrapToErrorSpan(Util.escape(display));
         }
-        return display;
+        return Util.escape(display);
     }
 
     /** The full version for a tooltip, with the controller's version added if the node is incompatible. */

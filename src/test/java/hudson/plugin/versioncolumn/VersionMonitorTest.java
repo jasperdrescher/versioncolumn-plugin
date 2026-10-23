@@ -68,6 +68,12 @@ class VersionMonitorTest {
     }
 
     @Test
+    void testToHtml_EscapesVersionReportedByAgent() {
+        String version = "<img src=x onerror=alert(1)>";
+        assertEquals(Util.wrapToErrorSpan("&lt;img src=x onerror=alert(1)&gt;"), versionMonitor.toHtml(version));
+    }
+
+    @Test
     void testDescriptorImplConstructor() {
         VersionMonitor.DescriptorImpl descriptorImpl = new VersionMonitor.DescriptorImpl();
         assertSame(VersionMonitor.DESCRIPTOR, descriptorImpl, "DESCRIPTOR should be set to this instance");
